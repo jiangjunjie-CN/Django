@@ -1,0 +1,32 @@
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<!--action确定提交的位置，不写或者为空代表提交到当前路由-->
+<!--method确认请求方式，不写或者为空代表以get方式提交-->
+<form action="{% url 'polls:vote' question.id %}" method="post">
+<!--csrf_token这个标签用于跨站请求伪造保护。常用于为form表单提供csrf令牌。不需要结束标签。    -->
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+<!--forloop.counter：循环的当前索引值，从1开始计数；常用于生成一个表格或者列表的序号-->
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% empty %}
+    <p>No question are available.</p>
+{% endfor %}
+    <input type="radio" name="other" id="other">
+    <label for="other">other:</label>
+    <input type="text" name="other_text" id="other_text">
+    <br>
+<input type="submit" value="Vote">
+<input type="submit" value="upload">
+</form>
+
+
+{% if messages %}
+<script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}

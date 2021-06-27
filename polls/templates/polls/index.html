@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+
+<!--{% if lastest_qlist %}-->
+<!--    <ul>-->
+<!--    {% for question in lastest_qlist %}-->
+<!--        &lt;!&ndash;{{ question.question_text|upper }}为模板的过滤方式，upper即为将对应文字转换为大写，Django提供了大约六十个内置的模版过滤器&ndash;&gt;-->
+<!--        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text|upper }}</a></li>-->
+<!--    {% endfor %}-->
+<!--    </ul>-->
+<!--{% else %}-->
+<!--    <p>No polls are available.</p>-->
+<!--{% endif %}-->
+
+<!--改用for...empty语句比if...for更加简洁-->
+
+{% for question in lastest_qlist %}
+    <!--{{ question.question_text|upper }}为模板的过滤方式，upper即为将对应文字转换为大写，Django提供了大约六十个内置的模版过滤器-->
+    <ul>
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text|upper }}</a></li>
+    </ul>
+{% empty %}
+    <p>No polls are available.</p>
+{% endfor %}
+
+</body>
+</html>

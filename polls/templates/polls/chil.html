@@ -1,0 +1,22 @@
+<!--已extends标签开头的模板，django首先会去加载父模版-->
+<!--如果在模版中使用extends标签，它必须是模版中的第一个标签，必须放在文件首行-->
+{% extends "./base.html" %}
+
+{% block title %}jjj blog{% endblock %}
+
+<!--子模版中，已block标签替换父模板中的对应模块，否则依旧加载父模板的对应内容-->
+{% block content %}
+{% for entry in blog_entries %}
+    <h2>{{ entry.question_text }}</h2>
+    <p>{{ entry.pub_date }}</p>
+{% endfor %}
+{% endblock %}
+
+
+<!--如果需要获取父模板中的block的内容，可以使用{{ block.super }}变量。如果想要在父block中新增内容而不是完全覆盖它-->
+{% block sidebar %}
+{{ block.super }}
+<ul>
+    <li><a href="www.sina.com.cn">新浪</a></li>
+</ul>
+{% endblock %}
